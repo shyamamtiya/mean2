@@ -1,0 +1,34 @@
+<div class="container">
+  <mat-card><mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
+    <button mat-icon-button disabled></button>
+    {{node.item}}
+  </mat-tree-node>
+
+  <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent;let index=index" matTreeNodePadding>
+    <button mat-icon-button disabled></button>
+    <mat-form-field>
+      <input matInput #itemValue placeholder="New item...">
+    </mat-form-field>
+    <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+  </mat-tree-node>
+
+  <mat-tree-node *matTreeNodeDef="let node; when: hasChild;let index=index" matTreeNodePadding>
+    <button mat-icon-button matTreeNodeToggle
+            [attr.aria-label]="'toggle ' + node.filename">
+      <mat-icon class="mat-icon-rtl-mirror">
+        {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+      </mat-icon>
+    </button>
+     {{node.item}}
+    <button mat-icon-button (click)="addNewItem(node)"><mat-icon>add</mat-icon></button>
+    <button mat-icon-button (click)="removeItem(node,index)"><mat-icon>remove</mat-icon></button>
+    <button mat-button (click)="addNewItem(node,true)">Save</button>
+  </mat-tree-node>
+</mat-tree>
+<mat-form-field>
+  <input matInput #NewitemValue placeholder="New item...">
+</mat-form-field>
+<button mat-button (click)="AddNewNode(NewitemValue.value)">Save</button>
+</mat-card>
+</div>
